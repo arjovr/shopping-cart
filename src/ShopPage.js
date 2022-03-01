@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { ProductElement } from "./components/ProductElement"
 import { NavigationBar } from "./NavigationBar"
 
@@ -35,15 +36,17 @@ class Cart {
 
 const cart = new Cart()
 
-const addToCart = (quantity, id) => {
-    cart.add(id, quantity)
-    console.log(cart)
-}
 
 function ShopPage() {
+    const [total, setTotal] = useState(0)
+
+    const addToCart = (quantity, id) => {
+        cart.add(id, quantity)
+        setTotal(total + quantity)
+    }
     return (
         <div>
-            <NavigationBar />
+            <NavigationBar total={total} />
             <div>hola desde shop page</div>
             {products.map((product) => {
                 return <ProductElement key={product.id} product={product} addToCart={addToCart} />
